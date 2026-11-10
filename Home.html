@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4ca19">
+  <title>Buzz - Home</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #191919;
+      background: #f5f4ef;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:focus-visible,
+    button:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid #d5aa00;
+      outline-offset: 3px;
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 1;
+      top: 0;
+      display: flex;
+      min-height: 72px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 12px max(24px, calc((100% - 1180px) / 2));
+      border-bottom: 1px solid #e8e5dc;
+      background: #fff;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 1.45rem;
+      font-weight: 900;
+      letter-spacing: -0.07em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border-radius: 12px;
+      background: #f4ca19;
+      font-size: 1.1rem;
+      letter-spacing: 0;
+    }
+
+    .topbar nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link,
+    .button-link {
+      padding: 10px 15px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .nav-link:hover {
+      background: #f5f4ef;
+    }
+
+    .button-link {
+      background: #191919;
+      color: #fff;
+    }
+
+    .button-link:hover {
+      background: #3a351e;
+    }
+
+    .button-link.primary {
+      background: #f4ca19;
+      color: #191919;
+    }
+
+    .button-link.primary:hover {
+      background: #e7bb05;
+    }
+
+    .layout {
+      display: grid;
+      width: min(100% - 40px, 1180px);
+      grid-template-columns: 220px minmax(0, 620px) 260px;
+      align-items: start;
+      gap: 28px;
+      margin: 32px auto;
+    }
+
+    .left-nav {
+      position: sticky;
+      top: 96px;
+      display: grid;
+      gap: 8px;
+      padding: 12px 0;
+    }
+
+    .left-nav a {
+      padding: 13px 15px;
+      border-radius: 12px;
+      color: #55534b;
+      font-weight: 700;
+    }
+
+    .left-nav a:hover,
+    .left-nav a[aria-current="page"] {
+      background: #fff;
+      color: #191919;
+    }
+
+    .left-nav a[aria-current="page"] {
+      box-shadow: inset 4px 0 #f4ca19;
+    }
+
+    .feed {
+      display: grid;
+      gap: 18px;
+    }
+
+    .section-heading {
+      margin: 0 0 14px;
+      font-size: 1.35rem;
+      letter-spacing: -0.04em;
+    }
+
+    .stories,
+    .composer,
+    .post,
+    .sidebar-card {
+      border: 1px solid #e9e6de;
+      border-radius: 16px;
+      background: #fff;
+      box-shadow: 0 4px 18px rgb(25 25 25 / 3%);
+    }
+
+    .stories {
+      padding: 18px;
+    }
+
+    .story-list {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .story {
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      color: #55534b;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .avatar {
+      display: grid;
+      width: 44px;
+      height: 44px;
+      flex: 0 0 auto;
+      place-items: center;
+      border: 2px solid #f4ca19;
+      border-radius: 50%;
+      background: #fff8d6;
+      color: #38300c;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .avatar.dark {
+      border-color: #191919;
+      background: #191919;
+      color: #f4ca19;
+    }
+
+    .composer {
+      padding: 18px;
+    }
+
+    .composer-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 76px;
+      resize: vertical;
+      padding: 12px;
+      border: 1px solid #e9e6de;
+      border-radius: 12px;
+      background: #faf9f5;
+      color: #191919;
+      font: inherit;
+    }
+
+    .composer-footer {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 12px;
+    }
+
+    .post-button {
+      padding: 10px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #f4ca19;
+      color: #191919;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .post-button:hover {
+      background: #e7bb05;
+    }
+
+    .post {
+      padding: 19px;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .post-author {
+      display: grid;
+      gap: 4px;
+    }
+
+    .post-author strong {
+      font-size: 0.92rem;
+    }
+
+    .post-author span,
+    .post-time {
+      color: #77746a;
+      font-size: 0.78rem;
+    }
+
+    .post-time {
+      margin-left: auto;
+    }
+
+    .post-content {
+      margin: 16px 0;
+      line-height: 1.65;
+    }
+
+    .post-content a {
+      color: #725b00;
+      font-weight: 700;
+    }
+
+    .post-image {
+      display: grid;
+      min-height: 210px;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f8dd57, #f4ca19 55%, #e8ae0a);
+      color: #191919;
+      font-size: clamp(2rem, 8vw, 4rem);
+      font-weight: 900;
+      letter-spacing: -0.08em;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 20px;
+      padding-top: 14px;
+      color: #55534b;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .post-actions span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .sidebar-card {
+      margin-bottom: 16px;
+      padding: 18px;
+    }
+
+    .sidebar-card h2 {
+      margin: 0 0 14px;
+      font-size: 1rem;
+    }
+
+    .trend {
+      display: grid;
+      gap: 4px;
+      padding: 11px 0;
+      border-top: 1px solid #f0eee8;
+    }
+
+    .trend span {
+      color: #77746a;
+      font-size: 0.75rem;
+    }
+
+    .trend strong {
+      font-size: 0.9rem;
+    }
+
+    .join-card {
+      background: #191919;
+      color: #fff;
+    }
+
+    .join-card p {
+      margin: 0 0 16px;
+      color: #d5d2c8;
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    .join-card .button-link {
+      display: inline-block;
+    }
+
+    footer {
+      padding: 12px 0 28px;
+      color: #77746a;
+      font-size: 0.75rem;
+      line-height: 1.8;
+    }
+
+    @media (max-width: 960px) {
+      .layout {
+        grid-template-columns: 175px minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .right-sidebar {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        min-height: 62px;
+        padding: 10px 16px;
+      }
+
+      .topbar nav {
+        gap: 2px;
+      }
+
+      .nav-link,
+      .button-link {
+        padding: 9px 10px;
+        font-size: 0.8rem;
+      }
+
+      .layout {
+        width: min(100% - 24px, 520px);
+        grid-template-columns: minmax(0, 1fr);
+        margin: 18px auto;
+      }
+
+      .left-nav {
+        position: static;
+        display: flex;
+        justify-content: space-around;
+        gap: 4px;
+        padding: 0;
+      }
+
+      .left-nav a {
+        padding: 10px;
+        font-size: 0.85rem;
+      }
+
+      .left-nav a[aria-current="page"] {
+        box-shadow: inset 0 -3px #f4ca19;
+      }
+
+      .stories,
+      .composer,
+      .post {
+        padding: 15px;
+      }
+
+      .story-list {
+        gap: 6px;
+      }
+
+      .post-image {
+        min-height: 165px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="Buzz home">
+      <span class="brand-mark" aria-hidden="true">B</span>
+      <span>buzz</span>
+    </a>
+    <nav aria-label="Account navigation">
+      <a class="nav-link" href="login.html">Log in</a>
+      <a class="button-link primary" href="Sign.html">Join Buzz</a>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <nav class="left-nav" aria-label="Main navigation">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="login.html">Explore</a>
+      <a href="login.html">Messages</a>
+      <a href="login.html">Profile</a>
+    </nav>
+
+    <section class="feed" aria-label="Community feed">
+      <section class="stories" aria-labelledby="stories-title">
+        <h1 class="section-heading" id="stories-title">Your circle</h1>
+        <div class="story-list">
+          <a class="story" href="Sign.html">
+            <span class="avatar dark" aria-hidden="true">+</span>
+            <span>Add yours</span>
+          </a>
+          <a class="story" href="login.html">
+            <span class="avatar" aria-hidden="true">AM</span>
+            <span>Alex</span>
+          </a>
+          <a class="story" href="login.html">
+            <span class="avatar" aria-hidden="true">JR</span>
+            <span>Jordan</span>
+          </a>
+          <a class="story" href="login.html">
+            <span class="avatar" aria-hidden="true">SK</span>
+            <span>Sam</span>
+          </a>
+          <a class="story" href="login.html">
+            <span class="avatar" aria-hidden="true">TC</span>
+            <span>Taylor</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="composer" aria-label="Create a post">
+        <div class="composer-row">
+          <span class="avatar dark" aria-hidden="true">B</span>
+          <textarea aria-label="Write a post" placeholder="What's buzzing?"></textarea>
+        </div>
+        <div class="composer-footer">
+          <a class="post-button" href="Sign.html">Share a post</a>
+        </div>
+      </section>
+
+      <article class="post">
+        <header class="post-header">
+          <span class="avatar" aria-hidden="true">AM</span>
+          <div class="post-author">
+            <strong>Alex Morgan</strong>
+            <span>@alexmorgan</span>
+          </div>
+          <time class="post-time" datetime="2026-11-05">2 hours ago</time>
+        </header>
+        <p class="post-content">
+          A little reminder to make room for the things that make you curious.
+          What are you learning this week? <a href="login.html">#goodvibes</a>
+        </p>
+        <div class="post-image" role="img" aria-label="Yellow graphic saying stay curious">
+          STAY CURIOUS
+        </div>
+        <div class="post-actions" aria-label="Post activity">
+          <span>Likes: 24</span>
+          <span>Comments: 8</span>
+          <span>Shares: 3</span>
+        </div>
+      </article>
+
+      <article class="post">
+        <header class="post-header">
+          <span class="avatar dark" aria-hidden="true">JR</span>
+          <div class="post-author">
+            <strong>Jordan Rivera</strong>
+            <span>@jordanr</span>
+          </div>
+          <time class="post-time" datetime="2026-11-05">5 hours ago</time>
+        </header>
+        <p class="post-content">
+          Hello, Buzz! Excited to share ideas, find inspiration, and meet new
+          people here. Say hello if you're new too.
+        </p>
+        <div class="post-actions" aria-label="Post activity">
+          <span>Likes: 16</span>
+          <span>Comments: 5</span>
+          <span>Shares: 2</span>
+        </div>
+      </article>
+    </section>
+
+    <aside class="right-sidebar" aria-label="Community">
+      <section class="sidebar-card">
+        <h2>Trending now</h2>
+        <div class="trend">
+          <span>Community</span>
+          <strong>#CreativeWeek</strong>
+        </div>
+        <div class="trend">
+          <span>Inspiration</span>
+          <strong>#SmallWins</strong>
+        </div>
+        <div class="trend">
+          <span>Popular today</span>
+          <strong>#WhatImLearning</strong>
+        </div>
+      </section>
+
+      <section class="sidebar-card join-card">
+        <h2>Your people are here.</h2>
+        <p>Join the conversation and share what you're passionate about.</p>
+        <a class="button-link primary" href="Sign.html">Create account</a>
+      </section>
+
+      <footer>
+        About &middot; Community guidelines<br>
+        &copy; 2026 Buzz
+      </footer>
+    </aside>
+  </main>
+</body>
+</html>
